@@ -33,9 +33,6 @@ jobs:
             gcc             \
             g++
 
-      - name: build 32-bit
-        id: build32
-        run: ./build.sh 32
 
       - name: build 64-bit
         id: build64
@@ -55,16 +52,7 @@ jobs:
             GDB v${{ steps.build64.outputs.GDB_VERSION }}
             Make v${{ steps.build64.outputs.MAKE_VERSION }}
 
-      - name: upload 32-bit
-        id: upload32
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./${{ steps.build32.outputs.OUTPUT_BINARY }}
-          asset_name: ${{ steps.build32.outputs.OUTPUT_BINARY }}
-          asset_content_type: application/x-7z-compressed
+      
 
       - name: upload 64-bit
         id: upload64
